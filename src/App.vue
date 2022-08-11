@@ -1,4 +1,10 @@
 <template>
+  <div class="background">
+    <div
+      class="elapsed"
+      :style="{ height: '100%', backgroundColor: 'blue' }"
+    ></div>
+  </div>
   <AppTimer
     :elapsed="timeElapsed"
     :limit="timeLimit"
@@ -7,32 +13,61 @@
 
 <script>
 import AppTimer from './components/AppTimer.vue';
-
 export default {
   name: 'App',
+  components: { AppTimer },
   data() {
     return {
-      timeElapsed: 0,
-      timerInterval: undefined,
       timeLimit: 10,
+      timeElapsed: 0,
+      timeInterval: undefined,
     };
   },
   methods: {
     startTimer() {
       this.timerInterval = setInterval(() => {
-        // Stop counting when there is no more time left
         if (++this.timeElapsed === this.timeLimit) {
           clearInterval(this.timerInterval);
         }
       }, 1000);
     },
   },
-  // Start timer immediately
   mounted() {
     this.startTimer();
   },
-  components: {
-    AppTimer,
-  },
 };
 </script>
+
+<style scoped>
+.background {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background-color: black;
+}
+
+.background .elapsed {
+  height: 100%;
+  transition: all 1s linear;
+}
+</style>
+
+<style>
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+</style>

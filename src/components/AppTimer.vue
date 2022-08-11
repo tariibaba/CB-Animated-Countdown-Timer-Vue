@@ -108,7 +108,7 @@ export default {
 .time-left-label {
   font-size: 70px;
   font-family: 'Segoe UI';
-  color: black;
+  color: white;
 }
 
 .time-left-path {
@@ -126,7 +126,7 @@ export default {
   transition: 1s linear all;
 
   /* Colors the ring */
-  stroke: blue;
+  stroke: white;
 }
 
 .svg {
