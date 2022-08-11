@@ -14,12 +14,14 @@
         />
         <path
           class="time-left-path"
+          v-if="timeLeft > 0"
           d="
             M 50, 50
             m -45, 0
             a 45,45 0 1,0 90,0
             a 45,45 0 1,0 -90,0
           "
+          :style="{ strokeDasharray }"
         ></path>
       </g>
     </svg>
@@ -45,6 +47,14 @@ export default {
     },
     timeLeft() {
       return this.limit - this.elapsed;
+    },
+    strokeDasharray() {
+      const radius = 45;
+      const total = 2 * Math.PI * radius;
+      const timeFraction = this.timeLeft / this.limit;
+      const adjTimeFraction = timeFraction - (1 - timeFraction) / this.limit;
+      const elapsedDash = Math.floor(adjTimeFraction * total);
+      return `${elapsedDash} ${total}`;
     },
   },
   props: {
