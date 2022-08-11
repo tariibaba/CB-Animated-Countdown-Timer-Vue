@@ -1,8 +1,26 @@
 <template>
   <div class="root">
-    <svg class="svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      class="svg"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g class="circle">
-        <circle class="time-elapsed-path" cx="50" cy="50" r="45" />
+        <circle
+          class="time-elapsed-path"
+          cx="50"
+          cy="50"
+          r="45"
+        />
+        <path
+          class="time-left-path"
+          d="
+            M 50, 50
+            m -45, 0
+            a 45,45 0 1,0 90,0
+            a 45,45 0 1,0 -90,0
+          "
+        ></path>
       </g>
     </svg>
     <div class="time-left-container">
@@ -81,5 +99,27 @@ export default {
   font-size: 70px;
   font-family: 'Segoe UI';
   color: black;
+}
+
+.time-left-path {
+  /* Same thickness as the original ring */
+  stroke-width: 7px;
+
+  /* Rounds the path endings  */
+  stroke-linecap: round;
+
+  /* Makes sure the animation starts at the top of the circle */
+  transform: rotate(90deg);
+  transform-origin: center;
+
+  /* One second aligns with the speed of the countdown timer */
+  transition: 1s linear all;
+
+  /* Colors the ring */
+  stroke: blue;
+}
+
+.svg {
+  transform: scaleX(-1);
 }
 </style>
