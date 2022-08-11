@@ -1,5 +1,5 @@
 <template>
-  <AppTimer />
+  <AppTimer :elapsed="0" :limit="10" />
 </template>
 
 <script>
