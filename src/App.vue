@@ -2,7 +2,8 @@
   <div class="background">
     <div
       class="elapsed"
-      :style="{ height: '100%', backgroundColor: 'blue' }"
+      :style="{ height: backgroundHeight, backgroundColor: 'blue' }"
+      v-if="timeLeft > 0"
     ></div>
   </div>
   <AppTimer
@@ -32,6 +33,26 @@ export default {
       }, 1000);
     },
   },
+  computed: {
+    timeLeft() {
+      return this.timeLimit - this.timeElapsed;
+    },
+    timeFraction() {
+      return this.timeLeft / this.timeLimit;
+    },
+    backgroundHeight() {
+      const timeFraction = this.timeFraction;
+
+      // Adjust time fraction to prevent lag when the time left
+      // is 0, like we did for the time left progress ring
+      const adjTimeFraction =
+        timeFraction - (1 - timeFraction) / this.timeLimit;
+
+      const height = Math.floor(adjTimeFraction * 100);
+
+      return `${height}%`;
+    },
+  },
   mounted() {
     this.startTimer();
   },
@@ -51,7 +72,6 @@ export default {
 }
 
 .background .elapsed {
-  height: 100%;
   transition: all 1s linear;
 }
 </style>
@@ -65,9 +85,11 @@ body,
 }
 
 #app {
+  /* Center timer vertically and horizontally */
   display: flex;
   justify-content: center;
   align-items: center;
+
   position: relative;
 }
 </style>
