@@ -2,7 +2,7 @@
   <div class="background">
     <div
       class="elapsed"
-      :style="{ height: backgroundHeight, backgroundColor: 'blue' }"
+      :style="{ height: backgroundHeight, backgroundColor }"
       v-if="timeLeft > 0"
     ></div>
   </div>
@@ -22,6 +22,20 @@ export default {
       timeLimit: 10,
       timeElapsed: 0,
       timeInterval: undefined,
+      thresholds: [
+        {
+          color: 'blue',
+          threshold: 1,
+        },
+        {
+          color: 'orange',
+          threshold: 0.5,
+        },
+        {
+          color: 'red',
+          threshold: 0.2,
+        },
+      ],
     };
   },
   methods: {
@@ -51,6 +65,13 @@ export default {
       const height = Math.floor(adjTimeFraction * 100);
 
       return `${height}%`;
+    },
+    backgroundColor() {
+      return this.thresholds.reduce(
+        (color, item) =>
+          item.threshold >= this.timeFraction ? item.color : color,
+        undefined
+      );
     },
   },
   mounted() {
