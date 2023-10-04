@@ -19,7 +19,7 @@ export default {
   components: { AppTimer },
   data() {
     return {
-      timeLimit: 10,
+      timeLimit: 5,
       timeElapsed: 0,
       timeInterval: undefined,
       thresholds: [
